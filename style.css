@@ -1,0 +1,185 @@
+/* Global Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace; /* Monospace for technical feel */
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    height: 100%;
+    max-width: 1600px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 15px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+#similarity-score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #000000;
+}
+
+/* Main Viewport */
+.viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #000000;
+    background-color: #f0f0f0;
+}
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* Hide video, we draw on canvas usually or show video behind */
+}
+
+.input_video.active {
+    display: block;
+    transform: scaleX(-1); /* Mirror effect */
+}
+
+.output_canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1); /* Mirror effect for canvas too */
+    z-index: 10;
+}
+
+#status-indicator {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000000;
+    color: #ffffff;
+    padding: 10px 30px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 20;
+    display: none; /* Hidden by default */
+}
+
+#status-indicator.matched {
+    display: block;
+    background-color: #00ff00; /* Distinct Green for Match */
+    color: #000000;
+    box-shadow: 0 0 20px #00ff00;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-top: 2px solid #000000;
+    padding-top: 20px;
+    height: 200px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type=range] {
+    width: 100%;
+    accent-color: #000000;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background: #ffffff;
+    border: 2px solid #000000;
+    color: #000000;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+.debug-info {
+    width: 300px;
+    height: 100%;
+    font-size: 12px;
+    overflow-y: auto;
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+}
+
+.debug-info h3 {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #000;
+    display: inline-block;
+}
+
+#debug-log {
+    white-space: pre-wrap;
+    line-height: 1.4;
+}

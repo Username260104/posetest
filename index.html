@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pose Matching Calibration</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <h1>POSE CALIBRATION</h1>
+            <div id="similarity-score">0%</div>
+        </header>
+
+        <!-- Main Viewport -->
+        <main class="viewport">
+            <!-- Labels -->
+            <div id="status-indicator">STAND BY</div>
+            
+            <!-- MediaPipe Container -->
+            <div class="canvas-container">
+                <video class="input_video"></video>
+                <canvas class="output_canvas"></canvas>
+            </div>
+        </main>
+
+        <!-- Controls -->
+        <aside class="controls">
+            <div class="control-group">
+                <label>THRESHOLD: <span id="threshold-value">80%</span></label>
+                <input type="range" id="threshold-slider" min="0" max="100" value="80">
+            </div>
+
+            <div class="button-group">
+                <button id="btn-save">UNLOCK / SAVE POSE</button>
+                <button id="btn-reset">RESET</button>
+            </div>
+
+            <div class="debug-info">
+                <h3>DEBUG DATA</h3>
+                <pre id="debug-log">Waiting for pose...</pre>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="pose_logic.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
