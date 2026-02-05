@@ -25,7 +25,7 @@ btnSave.addEventListener('click', () => {
         console.log("Target Pose Saved:", targetPose);
         alert("Pose Saved! Now copy this pose.");
         // Change Button Text
-        btnSave.innerText = "UPDATE TARGET POSE";
+        btnSave.innerText = "UPDATE POSE";
     } else {
         alert("No pose detected to save.");
     }
@@ -36,8 +36,31 @@ btnReset.addEventListener('click', () => {
     similarityDisplay.innerText = "0%";
     statusIndicator.className = ""; // Remove matched class
     statusIndicator.style.display = "none";
-    btnSave.innerText = "UNLOCK / SAVE POSE";
+    btnSave.innerText = "SAVE POSE";
     debugLog.innerText = "Waiting for pose...";
+});
+
+// Download Logic
+const btnDownload = document.getElementById('btn-download');
+
+btnDownload.addEventListener('click', () => {
+    const dataToSave = targetPose || currentPose;
+
+    if (dataToSave) {
+        const jsonStr = JSON.stringify(dataToSave, null, 2);
+        const blob = new Blob([jsonStr], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `pose_data_${new Date().toISOString().slice(0, 19).replace(/:/g, "-")}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    } else {
+        alert("No pose data available to download.");
+    }
 });
 
 sliderThreshold.addEventListener('input', (e) => {
@@ -121,12 +144,22 @@ pose.setOptions({
 pose.onResults(onResults);
 
 // Camera Setup
+// Use Max Resolution (FHD)
+const cameraWidth = 1920;
+const cameraHeight = 1080;
+
+// Set internal resolution for video/canvas to match camera
+videoElement.width = cameraWidth;
+videoElement.height = cameraHeight;
+canvasElement.width = cameraWidth;
+canvasElement.height = cameraHeight;
+
 const camera = new Camera(videoElement, {
     onFrame: async () => {
         await pose.send({ image: videoElement });
     },
-    width: 1280,
-    height: 720
+    width: cameraWidth,
+    height: cameraHeight
 });
 
 camera.start();
